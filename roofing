@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoofPulse AI — AI Operating System for Roofing Contractors</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbe8',
+                            100: '#fff3c2',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+    <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20">🏠</div>
+                <span class="text-xl font-extrabold tracking-tight text-white">RoofPulse <span class="text-amber-500">AI</span></span>
+            </div>
+            <div class="flex items-center gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+                <button onclick="switchView('sales')" id="navSalesBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow-md">Sales Page</button>
+                <button onclick="switchView('app')" id="navAppBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white">Contractor App</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <section id="salesView" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-semibold rounded-full uppercase tracking-wider">Built for Roofing Contractors</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white mt-4 mb-4 tracking-tight">Stop losing $10k+ roofing jobs to slow response times</h1>
+                <p class="text-slate-400 text-lg">Instant AI SMS response, custom pricing rule engine, and satellite roof calculations built into one automated platform.</p>
+                <div class="mt-8 flex justify-center gap-4">
+                    <button onclick="switchView('app')" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl shadow-lg shadow-amber-500/20 transition-all">Launch Live Demo App</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="appView" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Contractor Control Hub</h2>
+                    <p class="text-slate-400 text-sm">Configure custom rates, run satellite scans, and manage leads in real time.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">⚙️ Custom Contractor Pricing Engine</h3>
+                <p class="text-xs text-slate-400 mb-6">Set your base material/labor rates and multipliers to automatically calibrate satellite estimate math.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Base Price / SQ (Material + Labor)</label>
+                        <input id="baseRateInput" type="number" value="450" onchange="updateContractorRates()" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-sm focus:border-amber-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Steep Pitch Surcharge (% Add-on)</label>
+                        <input id="pitchRateInput" type="number" value="15" onchange="updateContractorRates()" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-sm focus:border-amber-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Default Waste Percentage (%)</label>
+                        <input id="wasteRateInput" type="number" value="12" onchange="updateContractorRates()" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-sm focus:border-amber-500 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
+                <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">📡 Satellite Roof Measurement & Estimate</h3>
+                <p class="text-xs text-slate-400 mb-4">Uses your custom pricing rules configured above.</p>
+                <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                    <input id="roofAddressInput" type="text" value="742 Evergreen Terrace, Springfield" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white text-sm outline-none focus:border-amber-500">
+                    <button onclick="runSatelliteMeasurement()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-sm transition-all">Scan & Calculate</button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Roof Area</span>
+                        <span id="satArea" class="text-xl font-bold text-white">2,850 sq ft</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Roofing Squares</span>
+                        <span id="satSquares" class="text-xl font-bold text-amber-400">28.5 SQ</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Waste Factor</span>
+                        <span id="satWaste" class="text-xl font-bold text-white">12%</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Estimated Total</span>
+                        <span id="satCost" class="text-xl font-bold text-emerald-400">$14,355</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let contractorSettings = { baseRate: 450, pitchSurcharge: 15, wastePct: 12 };
+
+        function switchView(view) {
+            if (view === 'sales') {
+                document.getElementById('salesView').classList.remove('hidden');
+                document.getElementById('appView').classList.add('hidden');
+                document.getElementById('navSalesBtn').className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow-md';
+                document.getElementById('navAppBtn').className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white';
+            } else {
+                document.getElementById('salesView').classList.add('hidden');
+                document.getElementById('appView').classList.remove('hidden');
+                document.getElementById('navAppBtn').className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-amber-500 text-slate-950 shadow-md';
+                document.getElementById('navSalesBtn').className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white';
+            }
+        }
+
+        function updateContractorRates() {
+            contractorSettings.baseRate = parseFloat(document.getElementById('baseRateInput').value) || 450;
+            contractorSettings.pitchSurcharge = parseFloat(document.getElementById('pitchRateInput').value) || 0;
+            contractorSettings.wastePct = parseFloat(document.getElementById('wasteRateInput').value) || 10;
+            runSatelliteMeasurement();
+        }
+
+        function runSatelliteMeasurement() {
+            const sqFt = 2850;
+            const squares = sqFt / 100;
+            const wasteMultiplier = 1 + (contractorSettings.wastePct / 100);
+            const totalSquares = squares * wasteMultiplier;
+            const pitchMultiplier = 1 + (contractorSettings.pitchSurcharge / 100);
+            const totalCost = Math.round(totalSquares * contractorSettings.baseRate * pitchMultiplier);
+
+            document.getElementById('satSquares').innerText = squares.toFixed(1) + ' SQ';
+            document.getElementById('satWaste').innerText = contractorSettings.wastePct + '%';
+            document.getElementById('satCost').innerText = '$' + totalCost.toLocaleString();
+        }
+    </script>
+</body>
+</html>
